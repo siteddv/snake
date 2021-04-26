@@ -8,7 +8,7 @@ const foodImage = new Image();
 foodImage.src = "img/food.png";
 
 const boxSize = 32;
-const score = 0;
+let score = 0;
 
 let foodCoordinates = {
    x: Math.floor(Math.random() * 17 + 1) * boxSize,
@@ -38,7 +38,10 @@ function drawGame() {
    context.drawImage(background, 0, 0);
    context.drawImage(foodImage, foodCoordinates.x, foodCoordinates.y);
 
-   for (let i = 0; i < snakeBodyArray.length; ++i) {
+   context.fillStyle = "red";
+   context.fillRect(snakeBodyArray[0].x, snakeBodyArray[0].y, boxSize, boxSize);
+
+   for (let i = 1; i < snakeBodyArray.length; ++i) {
       context.fillStyle = "green";
       context.fillRect(snakeBodyArray[i].x, snakeBodyArray[i].y, boxSize, boxSize);
    }
