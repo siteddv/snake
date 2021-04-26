@@ -50,7 +50,16 @@ function drawGame() {
    let snakeHeadX = snakeBodyArray[0].x;
    let snakeHeadY = snakeBodyArray[0].y;
 
-   snakeBodyArray.pop();
+   if (snakeHeadX === foodCoordinates.x && snakeHeadY === foodCoordinates.y) {
+      ++score;
+
+      foodCoordinates = {
+         x: Math.floor(Math.random() * 17 + 1) * boxSize,
+         y: Math.floor(Math.random() * 15 + 3) * boxSize,
+      }
+   } else {
+      snakeBodyArray.pop();
+   }
 
    if (dir === "left") snakeHeadX -= boxSize;
    if (dir === "right") snakeHeadX += boxSize;
