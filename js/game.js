@@ -18,18 +18,18 @@ let foodCoordinates = {
 let snakeBodyArray = [];
 snakeBodyArray.push({ x: 9 * boxSize, y: 10 * boxSize });
 
-document.addEventListener('onkeydown', direction);
+document.addEventListener('keydown', direction);
 
 let dir;
 
 function direction(event) {
-   if (event.keyCode === 37 && dir === "right") {
+   if (event.keyCode === 37 && dir !== "right") {
       dir = "left";
-   } else if (event.keyCode === 38 && dir === "down") {
+   } else if (event.keyCode === 38 && dir !== "down") {
       dir = "up";
-   } else if (event.keyCode === 39 && dir === "left") {
+   } else if (event.keyCode === 39 && dir !== "left") {
       dir = "right";
-   } else if (event.keyCode === 40 && dir === "up") {
+   } else if (event.keyCode === 40 && dir !== "up") {
       dir = "down";
    }
 }
@@ -45,7 +45,25 @@ function drawGame() {
 
    context.fillStyle = "white";
    context.font = "50px Arial ";
-   context.fill(score, boxSize * 2.5, boxSize * 1.7);
-}
+   context.fillText(score, boxSize * 2.5, boxSize * 1.7);
 
+   let snakeHeadX = snakeBodyArray[0].x;
+   let snakeHeadY = snakeBodyArray[0].y;
+
+   snakeBodyArray.pop();
+
+   if (dir === "left") snakeHeadX -= boxSize;
+   if (dir === "right") snakeHeadX += boxSize;
+   if (dir === "up") snakeHeadY -= boxSize;
+   if (dir === "down") snakeHeadY += boxSize;
+
+   const newHead = {
+      x: snakeHeadX,
+      y: snakeHeadY,
+   }
+
+   snakeBodyArray.unshift(newHead);
+
+}
+debugger;
 let game = setInterval(drawGame, 100);
