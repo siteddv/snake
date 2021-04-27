@@ -64,6 +64,10 @@ function drawGame() {
       snakeBodyArray.pop();
    }
 
+   if (snakeHeadX < boxSize || snakeHeadX > boxSize * 17 || snakeHeady < 3 * boxSize || snakeHeadY > boxSize * 17) {
+      clearInterval(drawGame);
+   }
+
    if (dir === "left") snakeHeadX -= boxSize;
    if (dir === "right") snakeHeadX += boxSize;
    if (dir === "up") snakeHeadY -= boxSize;
