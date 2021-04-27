@@ -93,4 +93,4 @@ function drawGame() {
 
 }
 debugger;
-let game = setInterval(drawGame, 100);
+let game = setInterval(drawGame, 150);
