@@ -7,8 +7,12 @@ background.src = "img/background.png";
 const foodImage = new Image();
 foodImage.src = "img/food.png";
 
+const homepage = new Image();
+homepage.src = "img/homepage.jpg";
+
 const boxSize = 32;
 let score = 0;
+let isHomepageTurnOn = true;
 
 let foodCoordinates = {
    x: Math.floor(Math.random() * 17 + 1) * boxSize,
@@ -23,6 +27,15 @@ document.addEventListener('keydown', direction);
 let dir;
 
 function direction(event) {
+   let isFirst = false;
+   if (isHomepageTurnOn) {
+      isHomepageTurnOn = false;
+      if (dir === undefined) {
+         isFirst = true;
+      } else {
+         location.reload();
+      }
+   }
    if (event.keyCode === 37 && dir !== "right") {
       dir = "left";
    } else if (event.keyCode === 38 && dir !== "down") {
@@ -32,17 +45,31 @@ function direction(event) {
    } else if (event.keyCode === 40 && dir !== "up") {
       dir = "down";
    }
+
+   if (isFirst) {
+      game = setInterval(drawGame, 150);
+   }
 }
 
 function eatTail(head, arr) {
    for (let i = 0; i < arr.length; ++i) {
       if (head.x === arr[i].x && head.y === arr[i].y) {
+         isHomepageTurnOn = true;
          clearInterval(game);
+         drawGame();
       }
    }
 }
 
 function drawGame() {
+   if (isHomepageTurnOn) {
+      context.drawImage(homepage, 0, 0);
+      context.fillStyle = "#000";
+      context.font = "40px Verdana";
+      context.fillText("Your score: " + score, 170, 450);
+      clearInterval(game);
+      return;
+   }
    context.drawImage(background, 0, 0);
    context.drawImage(foodImage, foodCoordinates.x, foodCoordinates.y);
 
@@ -74,7 +101,9 @@ function drawGame() {
 
    if (snakeHeadX < boxSize || snakeHeadX > boxSize * 17 ||
       snakeHeadY < 3 * boxSize || snakeHeadY > boxSize * 17) {
+      isHomepageTurnOn = true;
       clearInterval(game);
+      drawGame();
    }
 
    if (dir === "left") snakeHeadX -= boxSize;
