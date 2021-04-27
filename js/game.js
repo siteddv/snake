@@ -61,7 +61,7 @@ function eatTail(head, arr) {
    }
 }
 
-function drawGame() {
+function drawHomepage() {
    if (isHomepageTurnOn) {
       context.drawImage(homepage, 0, 0);
       context.fillStyle = "#000";
@@ -70,9 +70,14 @@ function drawGame() {
       clearInterval(game);
       return;
    }
+}
+
+function drawGameplayInterface() {
    context.drawImage(background, 0, 0);
    context.drawImage(foodImage, foodCoordinates.x, foodCoordinates.y);
+}
 
+function drawSnake() {
    context.fillStyle = "red";
    context.fillRect(snakeBodyArray[0].x, snakeBodyArray[0].y, boxSize, boxSize);
 
@@ -80,10 +85,23 @@ function drawGame() {
       context.fillStyle = "green";
       context.fillRect(snakeBodyArray[i].x, snakeBodyArray[i].y, boxSize, boxSize);
    }
+}
 
+function drawCurrentScore() {
    context.fillStyle = "white";
    context.font = "50px Arial ";
    context.fillText(score, boxSize * 2.5, boxSize * 1.7);
+}
+
+function drawGame() {
+
+   drawHomepage();
+
+   drawGameplayInterface();
+
+   drawSnake();
+
+   drawCurrentScore();
 
    let snakeHeadX = snakeBodyArray[0].x;
    let snakeHeadY = snakeBodyArray[0].y;
