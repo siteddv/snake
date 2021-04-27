@@ -34,6 +34,14 @@ function direction(event) {
    }
 }
 
+function eatTail(head, arr) {
+   for (let i = 0; i < arr.length; ++i) {
+      if (head.x === arr[i].x && head.y === arr[i].y) {
+         clearInterval(game);
+      }
+   }
+}
+
 function drawGame() {
    context.drawImage(background, 0, 0);
    context.drawImage(foodImage, foodCoordinates.x, foodCoordinates.y);
@@ -64,8 +72,9 @@ function drawGame() {
       snakeBodyArray.pop();
    }
 
-   if (snakeHeadX < boxSize || snakeHeadX > boxSize * 17 || snakeHeady < 3 * boxSize || snakeHeadY > boxSize * 17) {
-      clearInterval(drawGame);
+   if (snakeHeadX < boxSize || snakeHeadX > boxSize * 17 ||
+      snakeHeadY < 3 * boxSize || snakeHeadY > boxSize * 17) {
+      clearInterval(game);
    }
 
    if (dir === "left") snakeHeadX -= boxSize;
@@ -77,6 +86,8 @@ function drawGame() {
       x: snakeHeadX,
       y: snakeHeadY,
    }
+
+   eatTail(newHead, snakeBodyArray);
 
    snakeBodyArray.unshift(newHead);
 
