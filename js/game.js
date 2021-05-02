@@ -68,8 +68,9 @@ function drawHomepage() {
       context.font = "40px Verdana";
       context.fillText("Your score: " + score, 170, 450);
       clearInterval(game);
-      return;
+      return true;
    }
+   return false;
 }
 
 function drawGameplayInterface() {
@@ -95,7 +96,9 @@ function drawCurrentScore() {
 
 function drawGame() {
 
-   drawHomepage();
+   if (drawHomepage()) {
+      return;
+   };
 
    drawGameplayInterface();
 
